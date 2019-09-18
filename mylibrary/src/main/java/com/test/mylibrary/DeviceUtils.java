@@ -196,7 +196,7 @@ public class DeviceUtils {
     /**
      * 获取系统引擎
      */
-    private  String getUserAgent() {
+    private String getUserAgent() {
         String userAgent = "";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             try {
@@ -235,7 +235,7 @@ public class DeviceUtils {
     /**
      * 获取唯一标识Android_id
      */
-    private String getAndroidId() {
+    public String getAndroidId() {
         try {
             return Settings.Secure.getString(act.getContentResolver(),
                     Settings.Secure.ANDROID_ID);
@@ -249,7 +249,7 @@ public class DeviceUtils {
     /**
      * 获取序列号
      */
-    private static String getSERIAL() {
+    public static String getSERIAL() {
         try {
             return Build.SERIAL;
         } catch (Exception ex) {
@@ -311,7 +311,7 @@ public class DeviceUtils {
      *
      * @return true 为模拟器
      */
-    public boolean notHasLightSensorManager() {
+    public boolean isNotHasLightSensorManager() {
         SensorManager sensorManager = (SensorManager) act.getSystemService(SENSOR_SERVICE);
         Sensor sensor8 = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT); //光
         if (null == sensor8) {
@@ -346,7 +346,7 @@ public class DeviceUtils {
                 || "google_sdk".equals(Build.PRODUCT)
                 || ((TelephonyManager) act.getSystemService(Context.TELEPHONY_SERVICE)).getNetworkOperatorName().toLowerCase().equals("android")
                 || !canResolveIntent;
-        return isEmulator || notHasLightSensorManager();
+        return isEmulator || isNotHasLightSensorManager();
     }
 
 
