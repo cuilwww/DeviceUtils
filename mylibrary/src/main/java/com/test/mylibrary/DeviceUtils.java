@@ -225,7 +225,7 @@ public class DeviceUtils {
      */
     public String getMacAddress() {
         String result = "";
-        WifiManager wifiManager = (WifiManager) act.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) act.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         result = wifiInfo.getMacAddress();
         return result;
