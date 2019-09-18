@@ -34,10 +34,11 @@ public class CheckExitService extends Service {
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
 
+        Toast.makeText(this, "App要退出了", Toast.LENGTH_LONG).show();
+
         //App要退出了
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
         Date date = new Date(System.currentTimeMillis());
-
         SharedPreferences sharedPreferences = getSharedPreferences("ExitTime", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("appExitTime", simpleDateFormat.format(date));
@@ -52,7 +53,7 @@ public class CheckExitService extends Service {
         List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = activtyManager.getRunningAppProcesses();
         for (int i = 0; i < runningAppProcesses.size(); i++) {
 //            if (packageName.equals(runningAppProcesses.get(i).processName)) {
-//                Toast.makeText(this, "app还在运行中", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "app还在运行中", Toast.LENGTH_LONG).show();
 //            }
         }
         return START_NOT_STICKY;
@@ -61,6 +62,7 @@ public class CheckExitService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Toast.makeText(this, "onCreate", Toast.LENGTH_LONG).show();
     }
 }
 
