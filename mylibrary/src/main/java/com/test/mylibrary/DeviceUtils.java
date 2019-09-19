@@ -298,11 +298,11 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
         String providersName = "";
         String IMSI = getIMSI();
         if (IMSI != null) {
-            if (IMSI.startsWith("46000") || IMSI.startsWith("46002") || IMSI.startsWith("46007")) {
+            if (IMSI.startsWith("46000") || IMSI.startsWith("46002") || IMSI.startsWith("46004") || IMSI.startsWith("46007") || IMSI.startsWith("46008")) {
                 providersName = "中国移动";
-            } else if (IMSI.startsWith("46001") || IMSI.startsWith("46006")) {
+            } else if (IMSI.startsWith("46001") || IMSI.startsWith("46006") || IMSI.startsWith("46009")) {
                 providersName = "中国联通";
-            } else if (IMSI.startsWith("46003")) {
+            } else if (IMSI.startsWith("46003") || IMSI.startsWith("46005") || IMSI.startsWith("46011")) {
                 providersName = "中国电信";
             }
             return providersName;
@@ -365,13 +365,13 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
 
 
     /**
-     * 获取是否竖屏
+     * 获取是否横屏
      */
-    public boolean getIsPortrait() {
+    public boolean getIsLANDSCAPE() {
 
         Configuration mConfiguration = act.getResources().getConfiguration(); //获取设置的配置信息
         int ori = mConfiguration.orientation; //获取屏幕方向
-        return (ori == mConfiguration.ORIENTATION_PORTRAIT);
+        return (ori == mConfiguration.ORIENTATION_LANDSCAPE);
     }
 
 
