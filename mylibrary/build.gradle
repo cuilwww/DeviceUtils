@@ -33,5 +33,5 @@ dependencies {
 
 
     api 'pub.devrel:easypermissions:1.0.0'
-    api 'com.github.qiaoxianzhu:HttpUtils:1.1'
+
 }

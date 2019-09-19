@@ -223,10 +223,16 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
      * 获取手机MAC地址 只有手机开启wifi才能获取到mac地址
      */
     public String getMacAddress() {
+
+
         String result = "";
         WifiManager wifiManager = (WifiManager) act.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-        result = wifiInfo.getMacAddress();
+
+        //只有手机开启wifi才能获取到mac地址
+        if (null != wifiManager) {
+            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            result = wifiInfo.getMacAddress();
+        }
         return result;
     }
 
@@ -271,15 +277,11 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String getPhoneNumber() {
 
-        boolean str = PermissionsLogUtils.easyCheckPermissions(act,
+        boolean isHave = PermissionsLogUtils.easyCheckPermissions(act,
                 Manifest.permission.READ_SMS,
                 Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_PHONE_STATE);
-        Log.d("getPhoneNumber", "boolean: " + str);
-        if (str) {
-            return tm == null ? null : tm.getLine1Number();
-        } else {
-            return null;
-        }
+
+        return !isHave ? null : (tm == null ? null : tm.getLine1Number());
 
 
     }
@@ -291,6 +293,8 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
      * @return 运营商名字
      */
     public String getOperator() {
+
+
         String providersName = "";
         String IMSI = getIMSI();
         if (IMSI != null) {
@@ -312,7 +316,9 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
      */
     public String getIMSI() {
 
-        return tm == null ? null : tm.getSubscriberId();
+        boolean isHave = PermissionsLogUtils.easyCheckPermissions(act,
+                Manifest.permission.READ_PHONE_STATE);
+        return !isHave ? null : (tm == null ? null : tm.getSubscriberId());
     }
 
 
