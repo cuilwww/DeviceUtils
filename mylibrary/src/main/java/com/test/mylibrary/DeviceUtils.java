@@ -283,7 +283,7 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
                 Manifest.permission.READ_SMS,
                 Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_PHONE_STATE);
 
-        return !isHave ? null : (tm == null ? null : tm.getLine1Number());
+        return !isHave ? "" : (tm == null ? "" : tm.getLine1Number());
 
 
     }
@@ -320,7 +320,7 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
 
         boolean isHave = PermissionsLogUtils.easyCheckPermissions(act,
                 Manifest.permission.READ_PHONE_STATE);
-        return !isHave ? null : (tm == null ? null : tm.getSubscriberId());
+        return !isHave ? "" : (tm == null ? "" : tm.getSubscriberId());
     }
 
 
