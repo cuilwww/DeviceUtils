@@ -2,6 +2,8 @@ package com.test.mylibrary;
 
 import com.test.httputils.CommonResult;
 
+import java.util.HashMap;
+
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -17,6 +19,6 @@ public interface UpService {
     @FormUrlEncoded
     @POST("/device/collect")
     Observable<CommonResult<Object>> deviceCollect(
-            @Field("collect") Object collect);
+            @Field("collect") HashMap collect);
 
 }

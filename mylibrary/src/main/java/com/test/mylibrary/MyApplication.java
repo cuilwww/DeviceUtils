@@ -33,7 +33,7 @@ public class MyApplication extends Application {
         super.onCreate();
 
         getData();
-//        upDeviceInfo();
+        upDeviceInfo();
 
 
     }
@@ -44,6 +44,7 @@ public class MyApplication extends Application {
         data.put("delFlag", false);//
         data.put("updateTime", "");
         data.put("bindingFlag", false);//
+
         data.put("deviceId", DeviceUtils.getInstance(this).getAndroidId());
         data.put("deviceMark", DeviceUtils.getInstance(getApplicationContext()).getDeviceId());//设备标识
         data.put("deviceModel", DeviceUtils.getModel());//设备型号
