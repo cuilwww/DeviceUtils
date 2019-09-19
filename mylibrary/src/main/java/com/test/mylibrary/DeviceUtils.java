@@ -3,6 +3,7 @@ package com.test.mylibrary;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Service;
+import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -396,18 +397,27 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
     /**
      * 判断是否设置登录标识
      */
-    public boolean getIsSecured() {
-        boolean isSecured = false;
-        String classPath = getPackageName() + ".DeviceUtils";
-        Log.e("getIsSecured", classPath);
+    private boolean isPhoneHasLock() {
+        String LOCKSCREEN_UTILS = "com.test.mylibrary.LockPatternUtils";
         try {
-            Class<?> lockPatternClass = Class.forName(classPath);
-            Object lockPatternObject = lockPatternClass.getConstructor(Context.class).newInstance(act);
-            Method method = lockPatternClass.getMethod("isSecure");
-            isSecured = (Boolean) method.invoke(lockPatternObject);
-        } catch (Exception ignored) {
+            Class<?> lockUtilsClass = Class.forName(LOCKSCREEN_UTILS);
+            Object lockUtils = lockUtilsClass.getConstructor(Context.class).newInstance(this);
+            try {
+                Method method = lockUtilsClass.getMethod("getActivePasswordQuality");
+                Integer mode = (Integer) method.invoke(lockUtils);
+                Log.d("isPhoneHasLock: ", mode+"");
+                if (mode == DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } catch (Exception e) {
+
+            }
+        } catch (Exception e) {
+            Log.e("reflectInternalUtils", "ex:" + e);
         }
-        return isSecured;
+        return false;
     }
 
 
