@@ -398,7 +398,7 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
     /**
      * 判断是否设置登录标识
      */
-    private boolean checkPasswordToUnLock() {
+    public boolean getIsPasswordLock() {
         KeyguardManager keyguardManager = (KeyguardManager) act.getSystemService(Context.KEYGUARD_SERVICE);
         assert keyguardManager != null;
         return keyguardManager.isKeyguardSecure();
