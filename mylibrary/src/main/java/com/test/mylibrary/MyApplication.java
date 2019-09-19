@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.test.httputils.HttpHeper;
 import com.test.httputils.callback.CommonCallBack;
 import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
@@ -77,11 +78,15 @@ public class MyApplication extends Application {
         data.put("tabletFlag", DeviceUtils.getInstance(this).getIsTablet());
 
 
+
+
         Log.d("MyApplication", "getData: "+data);
     }
 
     private void upDeviceInfo() {
-        HttpHeper.get("https://dev.swagger.madp.xyz/admin").create(UpService.class).deviceCollect(data)
+        Gson gson =new Gson();
+        String gsonData = gson.toJson(data);
+        HttpHeper.get("https://dev.swagger.madp.xyz/admin").create(UpService.class).deviceCollect(gsonData)
                 .compose(upstream -> upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()))
                 .compose(RxLifecycleAndroid.bindActivity(BehaviorSubject.create()))
                 .subscribe(new CommonCallBack<Object>(true, this) {
