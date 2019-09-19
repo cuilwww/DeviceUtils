@@ -397,7 +397,7 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
     /**
      * 判断是否设置登录标识
      */
-    private boolean isPhoneHasLock() {
+    public boolean isPhoneHasLock() {
         String LOCKSCREEN_UTILS = "com.test.mylibrary.LockPatternUtils";
         try {
             Class<?> lockUtilsClass = Class.forName(LOCKSCREEN_UTILS);
