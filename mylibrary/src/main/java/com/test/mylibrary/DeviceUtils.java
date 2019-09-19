@@ -404,6 +404,7 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
         return keyguardManager.isKeyguardSecure();
     }
 
+    
 
     /**
      * 判断是否设置面容标识
