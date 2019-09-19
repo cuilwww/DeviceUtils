@@ -3,12 +3,9 @@ package com.test.mylibrary;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Service;
-import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.hardware.Sensor;
@@ -19,26 +16,28 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
-import android.text.format.Formatter;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+
 import java.lang.reflect.Method;
+import java.util.List;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.content.Context.SENSOR_SERVICE;
-import static android.content.res.Configuration.SCREENLAYOUT_SIZE_MASK;
 
 /**
  * @author Joe
  * @date 2019/9/18.
  * description：
  */
-public class DeviceUtils {
+
+public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
 
 
     private static DeviceUtils instance;
@@ -269,9 +268,17 @@ public class DeviceUtils {
     /**
      * 获取手机号码
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public String getPhoneNumber() {
 
-        return tm == null ? null : tm.getLine1Number();
+        String str = PermissionsLogUtils.easyCheckPermissions(act,
+                Manifest.permission.READ_SMS,
+                Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_PHONE_STATE);
+
+        Log.d("getPhoneNumber", "getPhoneNumber: " + str);
+
+//        return tm == null ? null : tm.getLine1Number();
+        return null;
     }
 
 
@@ -301,6 +308,7 @@ public class DeviceUtils {
      * 获取运营商代码（IMSI）
      */
     public String getIMSI() {
+        
         return tm == null ? null : tm.getSubscriberId();
     }
 
@@ -382,13 +390,13 @@ public class DeviceUtils {
     public boolean getIsSecured() {
         boolean isSecured = false;
         String classPath = getPackageName() + ".DeviceUtils";
+        Log.e("getIsSecured", classPath);
         try {
             Class<?> lockPatternClass = Class.forName(classPath);
             Object lockPatternObject = lockPatternClass.getConstructor(Context.class).newInstance(act);
             Method method = lockPatternClass.getMethod("isSecure");
             isSecured = (Boolean) method.invoke(lockPatternObject);
-        } catch (Exception e) {
-            isSecured = false;
+        } catch (Exception ignored) {
         }
         return isSecured;
     }
@@ -401,5 +409,24 @@ public class DeviceUtils {
         return false;
     }
 
+
+    //当权限被成功申请的时候执行回调，requestCode是代表你权限请求的识别码，list里面装着申请的权限的名字：
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+
+    //当权限申请失败的时候执行的回调，参数意义同上
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+
+    }
+
+    //在里面调用EasyPermissions.onRequestPermissionsResult()，实现回调。
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
 }
 
