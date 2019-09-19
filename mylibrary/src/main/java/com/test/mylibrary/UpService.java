@@ -19,6 +19,6 @@ public interface UpService {
     @FormUrlEncoded
     @POST("device/collect")
     Observable<CommonResult<Object>> deviceCollect(
-            @Field("collect") HashMap collect);
+            @Field("collect") String collect);
 
 }
