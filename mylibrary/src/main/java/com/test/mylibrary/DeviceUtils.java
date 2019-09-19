@@ -44,10 +44,10 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
 
     private static DeviceUtils instance;
     private TelephonyManager tm;
-    private Activity act;
+    private Context act;
     DisplayMetrics metrics = new DisplayMetrics();
 
-    private DeviceUtils(Activity act) {
+    private DeviceUtils(Context act) {
         tm = (TelephonyManager) act.getSystemService(Context.TELEPHONY_SERVICE);
         this.act = act;
 
@@ -57,7 +57,7 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
         }
     }
 
-    public static DeviceUtils getInstance(Activity act) {
+    public static DeviceUtils getInstance(Context act) {
         if (instance == null) {
             instance = new DeviceUtils(act);
         } else if (instance.act != act) {
@@ -404,7 +404,7 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
         return keyguardManager.isKeyguardSecure();
     }
 
-    
+
 
     /**
      * 判断是否设置面容标识
