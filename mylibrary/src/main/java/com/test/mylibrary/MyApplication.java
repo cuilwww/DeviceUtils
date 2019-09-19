@@ -83,9 +83,9 @@ public class MyApplication extends Application {
     }
 
     private void upDeviceInfo() {
-//        Gson gson =new Gson();
-//        String gsonData = gson.toJson(data);
-        HttpHeper.get("https://dev.swagger.madp.xyz/admin").create(UpService.class).deviceCollect(data)
+        Gson gson =new Gson();
+        String gsonData = gson.toJson(data);
+        HttpHeper.get("https://dev.swagger.madp.xyz/admin").create(UpService.class).deviceCollect(gsonData)
                 .compose(upstream -> upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()))
                 .compose(RxLifecycleAndroid.bindActivity(BehaviorSubject.create()))
                 .subscribe(new CommonCallBack<Object>(true, this) {
