@@ -2,6 +2,7 @@ package com.test.mylibrary;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.KeyguardManager;
 import android.app.Service;
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
@@ -397,27 +398,10 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
     /**
      * 判断是否设置登录标识
      */
-    public boolean isPhoneHasLock() {
-        String LOCKSCREEN_UTILS = "com.test.mylibrary.LockPatternUtils";
-        try {
-            Class<?> lockUtilsClass = Class.forName(LOCKSCREEN_UTILS);
-            Object lockUtils = lockUtilsClass.getConstructor(Context.class).newInstance(this);
-            try {
-                Method method = lockUtilsClass.getMethod("getActivePasswordQuality");
-                Integer mode = (Integer) method.invoke(lockUtils);
-                Log.d("isPhoneHasLock: ", mode+"");
-                if (mode == DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
-                    return false;
-                } else {
-                    return true;
-                }
-            } catch (Exception e) {
-
-            }
-        } catch (Exception e) {
-            Log.e("reflectInternalUtils", "ex:" + e);
-        }
-        return false;
+    private boolean checkPasswordToUnLock() {
+        KeyguardManager keyguardManager = (KeyguardManager) act.getSystemService(Context.KEYGUARD_SERVICE);
+        assert keyguardManager != null;
+        return keyguardManager.isKeyguardSecure();
     }
 
 
