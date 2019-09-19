@@ -17,7 +17,7 @@ import retrofit2.http.POST;
 public interface UpService {
 
     @FormUrlEncoded
-    @POST("/device/collect")
+    @POST("device/collect")
     Observable<CommonResult<Object>> deviceCollect(
             @Field("collect") HashMap collect);
 

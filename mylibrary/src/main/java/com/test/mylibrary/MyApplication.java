@@ -81,8 +81,7 @@ public class MyApplication extends Application {
     }
 
     private void upDeviceInfo() {
-        HttpHeper.get().setBaseUrl("https://dev.swagger.madp.xyz/admin");
-        HttpHeper.get().create(UpService.class).deviceCollect(data)
+        HttpHeper.get("https://dev.swagger.madp.xyz/admin").create(UpService.class).deviceCollect(data)
                 .compose(upstream -> upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()))
                 .compose(RxLifecycleAndroid.bindActivity(BehaviorSubject.create()))
                 .subscribe(new CommonCallBack<Object>(true, this) {
