@@ -32,7 +32,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 
-
-
     api 'pub.devrel:easypermissions:1.0.0'
+    api 'com.github.qiaoxianzhu:HttpUtils:1.1'
 }

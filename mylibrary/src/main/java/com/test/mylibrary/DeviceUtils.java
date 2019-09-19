@@ -271,14 +271,17 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String getPhoneNumber() {
 
-        String str = PermissionsLogUtils.easyCheckPermissions(act,
+        boolean str = PermissionsLogUtils.easyCheckPermissions(act,
                 Manifest.permission.READ_SMS,
                 Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_PHONE_STATE);
+        Log.d("getPhoneNumber", "boolean: " + str);
+        if (str) {
+            return tm == null ? null : tm.getLine1Number();
+        } else {
+            return null;
+        }
 
-        Log.d("getPhoneNumber", "getPhoneNumber: " + str);
 
-//        return tm == null ? null : tm.getLine1Number();
-        return null;
     }
 
 
@@ -308,7 +311,7 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
      * 获取运营商代码（IMSI）
      */
     public String getIMSI() {
-        
+
         return tm == null ? null : tm.getSubscriberId();
     }
 
