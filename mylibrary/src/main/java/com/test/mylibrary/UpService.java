@@ -20,7 +20,7 @@ import retrofit2.http.POST;
  */
 public interface UpService {
 
-
+    @FormUrlEncoded
     @POST("device/collect")
     Observable<CommonResult<Object>> deviceCollect(
             @Field("collect") String collect);
