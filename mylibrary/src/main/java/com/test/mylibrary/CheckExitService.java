@@ -35,7 +35,7 @@ public class CheckExitService extends Service {
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
 
-        Log.d("onCreate: ", "onTaskRemoved");
+        Log.d("CheckExitService: ", "onTaskRemoved");
 
         //App要退出了
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
@@ -54,8 +54,8 @@ public class CheckExitService extends Service {
         List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = activtyManager.getRunningAppProcesses();
         for (int i = 0; i < runningAppProcesses.size(); i++) {
 //            if (packageName.equals(runningAppProcesses.get(i).processName)) {
-            Log.d("onCreate: ", "onStartCommand");
-            
+            Log.d("CheckExitService: ", "onStartCommand");
+
 //            }
         }
         return START_NOT_STICKY;
@@ -64,7 +64,20 @@ public class CheckExitService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("onCreate: ", "onCreate");
+        Log.d("CheckExitService: ", "onCreate");
     }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Log.d("CheckExitService: ", "onUnbind");
+        return super.onUnbind(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("CheckExitService: ", "onDestroy");
+    }
+
 }
 
