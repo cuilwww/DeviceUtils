@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -34,7 +35,7 @@ public class CheckExitService extends Service {
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
 
-        Toast.makeText(this, "App要退出了", Toast.LENGTH_LONG).show();
+        Log.d("onCreate: ", "onTaskRemoved");
 
         //App要退出了
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
@@ -53,7 +54,8 @@ public class CheckExitService extends Service {
         List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = activtyManager.getRunningAppProcesses();
         for (int i = 0; i < runningAppProcesses.size(); i++) {
 //            if (packageName.equals(runningAppProcesses.get(i).processName)) {
-                Toast.makeText(this, "app还在运行中", Toast.LENGTH_LONG).show();
+            Log.d("onCreate: ", "onStartCommand");
+            
 //            }
         }
         return START_NOT_STICKY;
@@ -62,7 +64,7 @@ public class CheckExitService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Toast.makeText(this, "onCreate", Toast.LENGTH_LONG).show();
+        Log.d("onCreate: ", "onCreate");
     }
 }
 
