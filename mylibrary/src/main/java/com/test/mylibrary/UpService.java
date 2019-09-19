@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
@@ -22,6 +23,6 @@ public interface UpService {
     @FormUrlEncoded
     @POST("device/collect")
     Observable<CommonResult<Object>> deviceCollect(
-            @Field("collect") String collect);
+            @FieldMap HashMap collect);
 
 }
