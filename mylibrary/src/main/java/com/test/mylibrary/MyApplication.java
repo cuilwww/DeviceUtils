@@ -20,6 +20,8 @@ import java.util.HashMap;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * @author Joe
@@ -76,16 +78,17 @@ public class MyApplication extends Application {
         data.put("systemVersion", DeviceUtils.getSysVersion());
         data.put("tabletFlag", DeviceUtils.getInstance(this).getIsTablet());
 
-
-
-
         Log.d("MyApplication", "getData: "+data);
     }
 
     private void upDeviceInfo() {
         Gson gson =new Gson();
         String gsonData = gson.toJson(data);
-        HttpHeper.get("https://dev.swagger.madp.xyz/admin").create(UpService.class).deviceCollect(gsonData)
+
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON,gsonData);
+
+        HttpHeper.get("https://dev.swagger.madp.xyz/admin").create(UpService.class).deviceCollect(body)
                 .compose(upstream -> upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()))
                 .compose(RxLifecycleAndroid.bindActivity(BehaviorSubject.create()))
                 .subscribe(new CommonCallBack<Object>(true, this) {
