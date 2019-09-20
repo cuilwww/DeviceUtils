@@ -168,12 +168,36 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
 
     /**
      * 屏幕比率
+     * Ø	Android：
+     * n	hdpi：21
+     * n	ldpi：22
+     * n	mdpi：23
+     * n	xhdpi：24
+     * n	xxhdpi：25
+     * n	xxxhdpi：26
+     *
+     * mdpi	120dpi~160dpi
+     * hdpi	160dpi~240dpi
+     * xhdpi	240dpi~320dpi
+     * xxhdpi	320dpi~480dpi
+     * xxxhdpi	480dpi~640dpi
      */
-    public String getScreenFraction() {
-        float density = metrics.density;      // 屏幕密度（像素比例：0.75/1.0/1.5/2.0）
-        int screenWidth = (int) (metrics.widthPixels * density + 0.5f);      // 屏幕宽（px，如：480 px）
-        int screenHeight = (int) (metrics.heightPixels * density + 0.5f);     // 屏幕高（px，如：800px）
-        return (screenWidth + ":" + screenHeight);
+    public int getScreenFraction() {
+        if (getScreenDPI() == 0) {
+            return 0;
+        }
+        if (120 <= getScreenDPI() && 160 > getScreenDPI()) {
+            return 22;
+        } else if (160 <= getScreenDPI() && 240 > getScreenDPI()) {
+            return 23;
+        } else if (240 < getScreenDPI() && 320 > getScreenDPI()) {
+            return 24;
+        } else if (320 < getScreenDPI() && 480 > getScreenDPI()) {
+            return 25;
+        } else if (480 < getScreenDPI() && 640 > getScreenDPI()) {
+            return 26;
+        }
+        return 0;
     }
 
     /**
@@ -403,7 +427,6 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
         assert keyguardManager != null;
         return keyguardManager.isKeyguardSecure();
     }
-
 
 
     /**
