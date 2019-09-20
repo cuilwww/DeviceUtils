@@ -190,11 +190,11 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
             return 22;
         } else if (160 <= getScreenDPI() && 240 > getScreenDPI()) {
             return 23;
-        } else if (240 < getScreenDPI() && 320 > getScreenDPI()) {
+        } else if (240 <= getScreenDPI() && 320 > getScreenDPI()) {
             return 24;
-        } else if (320 < getScreenDPI() && 480 > getScreenDPI()) {
+        } else if (320 <= getScreenDPI() && 480 > getScreenDPI()) {
             return 25;
-        } else if (480 < getScreenDPI() && 640 > getScreenDPI()) {
+        } else if (480 <= getScreenDPI() && 640 > getScreenDPI()) {
             return 26;
         }
         return 0;
