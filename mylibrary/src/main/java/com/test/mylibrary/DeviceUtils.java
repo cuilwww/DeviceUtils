@@ -1,6 +1,7 @@
 package com.test.mylibrary;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.app.Service;
@@ -300,6 +301,7 @@ public class DeviceUtils implements EasyPermissions.PermissionCallbacks {
     /**
      * 获取手机号码
      */
+    @SuppressLint("MissingPermission")
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String getPhoneNumber() {
 
